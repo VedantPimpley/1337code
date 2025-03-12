@@ -1,0 +1,28 @@
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        # General case
+        # Idea: 
+            # Assign one pointer to leftmost boundary, and the other to the rightmost
+            # Capacity is distance between current boundaries times height of the shorter boundary
+                # Capacity will only decrease if we update taller boundary inwards
+                # Capacity can increase if we update shorter boundary to a taller boundary even if inwards
+                # Update capacity as per this finding. Stop when left and right boundaries become the same, as there is no container left to assess at that point
+                # Unassessed containers are necessarily shorter or narrower than the assessed ones, naturally eliding them from the search space
+            # Return best capacity
+
+
+        # Initialize variables
+        n = len(height)
+        l, r = 0, n-1
+        calc_cap = lambda r, l, h: (r-l)*(min(h[l], h[r]))
+        best_cap = calc_cap(r, l, height)
+
+        while l < r:
+            if height[l] <= height[r]:
+                l += 1
+            else:
+                r -= 1
+            cur_cap = calc_cap(r, l, height)
+            best_cap = max(best_cap, cur_cap)
+
+        return best_cap
