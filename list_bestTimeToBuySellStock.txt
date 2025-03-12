@@ -1,0 +1,26 @@
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        # Initialize variables
+        n = len(prices)
+        max_profit = 0
+        sell_day = n-1
+
+        # Edge case
+        if n == 1: 
+            return 0
+
+        # Idea:
+            # Implementing the notion 'buy low and then sell high'
+            # Initialize last day as the sell day
+            # Initialize second-to-last day as the buy day
+            # Update max_profit as selldayprice-buydayprice if it exceeds current max_profit
+            # Keep going backwards until all days are assessed
+                # If curdayprice exceeds buydayprice, update buydayprice to it
+            # Return max_profit
+
+        for cur_day in range(n-2, -1, -1):
+            if prices[sell_day] < prices[cur_day]:
+                sell_day = cur_day
+            else:
+                max_profit = max(max_profit, prices[sell_day]-prices[cur_day])
+        return max_profit
