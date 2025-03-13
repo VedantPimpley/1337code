@@ -1,0 +1,45 @@
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        ''' Expected solution
+        # Initialize variables
+        n = len(nums)
+        target_freq = (n//2) + 1
+        freq_dict = {}
+
+        # Base cases
+        if n == 1 or n == 2:
+            return nums[0]
+
+        # General case
+        for i in nums:
+            if i not in freq_dict:
+                freq_dict[i] = 1
+            else:
+                freq_dict[i] += 1
+                if freq_dict[i] == target_freq:
+                    return i
+        assert(False)
+        '''
+
+        ''' Follow up solution '''
+        # Initialize variables
+        n = len(nums)
+        freq = 0
+        cand = nums[0]
+
+        # Base cases
+        if n == 1 or n == 2:
+            return nums[0]
+
+        # General case
+        for i in nums:
+            if freq == 0:
+                cand = i
+                freq = 1
+            else:
+                if i == cand:
+                    freq += 1
+                else:
+                    freq -= 1
+            
+        return cand
