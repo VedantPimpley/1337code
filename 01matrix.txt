@@ -1,0 +1,34 @@
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        m, n = len(mat), len(mat[0])
+        distance = [[None for _ in range(n)] for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if mat[i][j] == 0:
+                    distance[i][j] = 0
+                else:
+                    distance[i][j] = None
+
+        # initialize loop variables
+        reached_prev_epoch = set([(r,c) for c in range(n) for r in range(m) if mat[r][c] == 0])
+        epoch = 1
+    
+        while reached_prev_epoch:
+            reached_cur_epoch = set([])
+
+            for pos in reached_prev_epoch:
+                # find all unreached neighbours of pos in reached_prev_epoch
+                r, c = pos
+                neighbours = {(nr, nc) for nr, nc in [(r+1,c), (r-1,c), (r,c-1), (r,c+1)]
+                    if nr in range(m) and nc in range(n) and distance[nr][nc] is None
+                }
+
+                # set all their distance values to epoch if not set already
+                for nr, nc in neighbours:
+                    distance[nr][nc] = epoch
+                reached_cur_epoch |= neighbours
+
+            reached_prev_epoch = reached_cur_epoch
+            epoch += 1
+
+        return distance

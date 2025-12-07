@@ -1,0 +1,60 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        '''
+        requires:
+            len(nums) > 0
+            k <= n
+        ensures:
+            elements in result appear more or equally frequently as those not in the list
+        algorithm:
+            num_to_freq
+            freq_to_nums
+            max_freq = 0
+
+            scan list
+                for each element x
+                    if x not in num_to_freq, add {x: 1} to num_to_freq and do freq_to_nums[1].add(x)
+                    else
+                        freq_to_nums[num_to_freq[x]].remove(x)
+                        freq_to_nums[num_to_freq[x]+1].add(x)
+                        num_to_freq[x] += 1
+                        max_freq = max(max_freq, num_to_freq[x])
+                
+                res = {}
+                for f in range(max_freq, -1, -1):
+                    if f in freq_to_nums:
+                        while len(res) < k:
+                            res.add(freq_to_nums[f].pop())
+                res = list(res)
+                return res
+        '''
+
+        num_to_freq: dict[int, int] = {}
+        freq_to_nums: dict[int, set[int]] = {}
+        max_freq = 0
+
+        # calculate frequencies
+        for x in nums:
+            if x not in num_to_freq:
+                num_to_freq[x] = 1
+                if 1 not in freq_to_nums:
+                    freq_to_nums[1] = {x}
+                else:
+                    freq_to_nums[1].add(x)
+                max_freq = max(max_freq, 1)
+            else:
+                old_freq = num_to_freq[x]
+                new_freq = old_freq + 1
+                freq_to_nums[old_freq].remove(x)
+                freq_to_nums[new_freq] = freq_to_nums[new_freq].union({x}) if new_freq in freq_to_nums else {x}
+                num_to_freq[x] += 1
+                max_freq = max(max_freq, new_freq)
+
+        # populate result
+        res: set[int] = set()
+        for f in range(max_freq, -1, -1):
+            if f in freq_to_nums:
+                while len(res) < k and len(freq_to_nums[f]) > 0:
+                    res.add(freq_to_nums[f].pop())
+        res = list(res)
+        return res
