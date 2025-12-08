@@ -1,0 +1,39 @@
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        '''
+        requires:
+            s and t be non-null
+        ensures:
+            if res is true, s and t are permutations of one another
+        algorithm:
+            if either is none, return false
+            if lengths dont match, return false
+            if length is 1, return (s==t)
+
+            count the frequency of letters of s in dict d
+            uncount the frequency of letters of t from dict d,
+                deleting keys where frequency reaches 0
+            return (len(d.keys()) == 0)
+        '''
+
+        # edge cases
+        if s == None or t == None:
+            return False
+        if len(s) != len(t):
+            return False
+        if len(s) == 1:
+            return (s == t)
+        
+        # general case
+        d: dict = {}
+        for x in s:
+            d[x] = d[x]+1 if x in d else 1
+        for x in t:
+            if x not in d:
+                return False
+            else:
+                d[x] -= 1
+                if d[x] == 0:
+                    del d[x]
+
+        return (len(d.keys()) == 0)
