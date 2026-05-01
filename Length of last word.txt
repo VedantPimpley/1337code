@@ -1,0 +1,28 @@
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        '''
+        requires:
+            len of s is greater than 0
+        ensures:
+            len of output is less than len of s
+        algo:
+            init j as n-1
+            while s[j] == "":
+                j -= 1
+            i = j
+            while i >= 0 and s[i] != "":
+                i -= 1
+            word_len = j-i+1
+            return word_len
+        '''
+
+        # skip trailing spaces
+        j = len(s) - 1
+        while s[j] == " ":
+            j -= 1
+        
+        i = j
+        while i >= 0 and s[i] != " ":
+            i -= 1
+        word_len = j-i
+        return word_len

@@ -1,0 +1,40 @@
+how to stringify and de-stringify a list of strings?        
+        stringify:
+        serialize into a single string, separated by a delimiter
+        if delimiter exists in text, precede it with an escape character
+        if escape character exists in text, precede it with itself
+
+        destringify:
+        go one character at a time
+        hold normal characters in an accumulator
+        if delimiter found, trigger word separation
+        if escape character found, 
+            treat the next character as a normal character and continue from the next-next character
+            
+        from: Encode and Decode Strings
+        
+when inserting a value into a sorted list, use binary search to find insert position instead of linear search.
+
+right way to extract a digits from an integer is using modulo and floor division, not float division which is error prone.
+    while n != 0:
+        digits.add( n % 10 )
+        n = n // 10
+        
+// is different from int()
+    to remove decimal parts, use int(/) always
+    floor division tends towards neg infinity for neg numbers
+    difference:
+        int(-1/2) => 0
+        -1 // 2 => -1
+        
+To get a number in binary format string of a certain length l
+    format(n, f'0{l}b')
+    
+On len of a string based on position of idxs:
+    if    [     ]  then len is j-i+1
+          i     j 
+
+    if    [     ]  then len is j-i
+         i      j
+
+
