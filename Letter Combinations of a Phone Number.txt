@@ -1,0 +1,50 @@
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        '''
+        requires:
+            len(digits) > 0
+        ensures:
+            len(output) <= 4^n
+        algo:
+            init digit_map: Dict[int, str]
+            init output: list[str]
+            init next_output: list[str]
+            go through each num in digits
+                letters = digit_map[num]
+                for each l in letters
+                    next_output += [o+l for each o in output]
+                output = next_output
+                next_output = []
+            return output
+        '''
+
+        # edge case
+        n = len(digits)
+        if n == 0:
+            return []
+
+        # general case
+        digit_map = {
+            "2": ["a", "b", "c"],
+            "3": ["d", "e", "f"],
+            "4": ["g", "h", "i"],
+            "5": ["j", "k", "l"],
+            "6": ["m", "n", "o"],
+            "7": ["p", "q", "r", "s"],
+            "8": ["t", "u", "v"],
+            "9": ["w", "x", "y", "z"]
+        }
+
+        output: List[str] = digit_map[digits[0]]
+        next_output: List[str] = []
+
+        for num in digits[1:]:
+            print(output)
+            letters = digit_map[num]
+            for l in letters:
+                next_output += [o+l for o in output]
+            output = next_output
+            next_output = []
+
+        assert (len(output) <= 4**n)
+        return output
