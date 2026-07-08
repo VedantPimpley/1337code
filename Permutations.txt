@@ -1,0 +1,39 @@
+class Solution:
+    def permute_rec(self, nums: List[int]) -> List[List[int]]:
+        # edge case
+        n = len(nums)
+        if n == 1:
+            return [nums]
+
+        '''
+        algo:
+            output = []
+
+            f(bank, prefix, output) -> None
+                for i in bank:
+                    # pick any
+                    # append it to prefix
+                    # remove it from bank
+                    # if bank is empty, append prefix to output
+                    # else f(bank', prefix', output)
+
+            f(set(nums), [], output)
+
+            return output
+        '''
+
+        def f(bank:set[int], prefix:list[int], output:list[list[int]]) -> None:
+            # base case
+            if len(bank) == 0:
+                output.append(prefix)
+                return
+
+            # recursive case
+            for x in bank:
+                f(bank-{x}, prefix+[x], output)
+
+        output = []
+        f(set(nums), [], output)
+
+        # assert (len(output) = n!)
+        return output
