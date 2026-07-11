@@ -1,0 +1,44 @@
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        # edge case
+        if len(s) == 1:
+            return [1]
+
+        # general case
+        '''
+        create a dict. key is letter. value is index of its latest appearance.
+
+        init a set sett containing each letter in this block
+        init a list of ints output
+        go over s
+            update sett
+            if cur_idx >= dict[letter] for each letter in this block,
+                append cur_idx-prev_cut_idx to output
+                prev_cut_idx = cur_idx
+                reset s
+
+        assert sum(output) == len(s)
+        return output
+        '''
+
+        d = {}
+        for idx in range(0, len(s)):
+            char = s[idx]
+            d[char] = idx
+
+        output: list[int] = []
+        present = set([])
+        prev_cut_idx = -1
+        for idx in range(0, len(s)):
+            char = s[idx]
+            present.add(char)
+
+            is_part = all([idx >= d[char] for char in present])
+            if is_part:
+                part_len = idx-prev_cut_idx
+                output.append(part_len)
+                prev_cut_idx = idx
+                present.clear()
+        
+        assert (sum(output) == len(s))
+        return output
