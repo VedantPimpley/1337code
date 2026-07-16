@@ -1,0 +1,59 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        '''
+        requires:
+            root is not None
+            k <= number-of-nodes
+        ensures:
+            res val exists in tree
+        algo:
+            use LNR style DFS to traverse the tree
+            start counting when leftmost element has been reached (ct = 1)
+            increment ct for every node touched in that order
+            if ct == k, return that node's val
+
+
+            res = []
+            f(node, ct, k, res) -> None
+                if node.left is None and node.right is None, return
+
+                f(node.left, ct, k, res)
+
+                ct += 1
+                if ct == k:
+                    res[0] = node.val
+                    return
+
+                f(node.right, ct, k, res)
+                
+            f(root, 0, k, res)
+        '''
+
+        assert root is not None
+        # assert k <= n
+
+        def f(node:Optional[Node], ct: list[int], k: int, res: list[int]) -> None:
+            # base case
+            if node is None:
+                return
+
+            # recursive case
+            f(node.left, ct, k, res)
+            ct[0] += 1
+            if ct[0] == k:
+                res[0] = node.val
+                return
+            f(node.right, ct, k, res)
+
+        ct = [0]
+        res = [None]
+        f(root, ct, k, res)
+
+        return res[0]
