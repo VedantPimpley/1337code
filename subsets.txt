@@ -1,0 +1,11 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        output: set[tuple] = set([])
+        for i in range((2**n)):
+            mask = bin(i)[2:].zfill(n)
+            e = [nums[j] for j in range(n) if mask[j] == "1"]
+            output.add(tuple(e))
+
+        output = [list(e) for e in output]
+        return output
