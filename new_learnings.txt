@@ -1,3 +1,7 @@
+Most common mistakes
+    Jumping into coding with fuzzy algo in mind
+    Premature optimization
+
 how to stringify and de-stringify a list of strings?        
         stringify:
         serialize into a single string, separated by a delimiter
