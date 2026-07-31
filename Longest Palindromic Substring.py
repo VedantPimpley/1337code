@@ -26,11 +26,11 @@ class Solution:
         dp = [[False for _ in range(n)] for __ in range(n)]
         for i in reversed(range(n)):
             for j in range(i,n):
-                ends_match = s[i] == s[j]
+                l = j-i+1
                 inner_string_pal = dp[i+1][j-1] if j-i >= 3 else True
+                ends_match = s[i] == s[j]
                 if ends_match and inner_string_pal:
                     dp[i][j] = True
-                    l = j-i+1
                     if l > res[1]:
                         res = (s[i:j+1], l)
         return res[0]
