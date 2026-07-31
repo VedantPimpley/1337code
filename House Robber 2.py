@@ -18,7 +18,7 @@ class Solution:
             return nums[0]
 
         # general case
-        def hr_1(numbers:list[int]) -> int:
+        def rob_linear(numbers:list[int]) -> int:
             m = len(numbers)
             f = {i: None for i in range(m)}
             f[-1], f[-2] = 0, 0
@@ -28,5 +28,5 @@ class Solution:
 
             return f[m-1]
 
-        res = max(hr_1(nums[1:]), hr_1(nums[:n-1]))
+        res = max(rob_linear(nums[1:]), rob_linear(nums[:n-1]))
         return res
