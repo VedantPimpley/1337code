@@ -41,4 +41,5 @@ On len of a string based on position of idxs:
     if    [     ]  then len is j-i
          i      j
 
-
+1D DP
+    First define the dp state. Then find the recurrence relation. Then extract the final answer. Then code. 
