@@ -1,0 +1,71 @@
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        '''
+        e.c.
+        n == 0 -> return 0
+
+        g.c.
+        unvisited is a set of ints containing all nodes 1..n except k
+        level is a dict of int to int. key is node and val is time-taken. init {k:0}
+
+        construct graph g of nd: children where children is of (node, edge_wt)
+        init max_t as 0
+
+        while level
+            new_level is an empty dict
+            for each key,val in level
+                get all unvisited neighbors of key, unv_nei
+                # calculate time taken to reach each unv_nei
+                for each nei in unv_nei
+                    if nei in new_level
+                        new_level[nei] = max(new_level_nei, time)
+                    else
+                        new_level[nei] = time
+                        unvisited.pop(nei)
+            
+            level = new_level
+            for k,v in new_level:
+                max_t = max(max_t, v)
+            
+        return -1 if unvisited else max_t
+        '''
+
+        # edge case
+        if n == 1:
+            return 0
+
+        # general case
+        max_t = 0
+        unvisited = set([i for i in range(1, n+1) if i != k])
+        g = {i: [] for i in range(1,n+1)}
+        for u,v,t in times:
+            g[u].append((v,t)) # an edge exists from u to v having cost t
+
+        level = {k: 0}
+        while level:
+            print(max_t)
+            # construct new level of bfs
+            new_level = {}
+            for nd, delay in level.items():
+                unv_nei = [(v,t) for v,t in g[nd] if v in unvisited]
+                for v, t in unv_nei:
+                    if v not in new_level:
+                        new_level[v] = delay + t
+                        unvisited.remove(v)
+                    else:
+                        new_level[v] = min(new_level[v], delay + t)
+
+            # calculate max t seen yet
+            for nd, delay in new_level.items():
+                max_t = max(max_t, delay)
+            
+            level = new_level
+
+        worklist = {k:0}
+        for u,v,t in times:
+            
+
+        if unvisited:
+            return -1
+        else:
+            return max_t
